@@ -8,6 +8,11 @@ interface JwtCustomPayload extends JwtPayload {
     oid?: string;
 }
 
+/**
+ * 
+ * @param request Incoming GET Patient Request, should include Authorization Header
+ * @returns HttpResponse containing a filtered Patient Bundle
+ */
 export async function Patient(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
 
@@ -39,6 +44,11 @@ export async function Patient(request: HttpRequest, context: InvocationContext):
     return { 'headers': { 'content-type': 'application/json' }, 'body': JSON.stringify(patientBundle) };
 };
 
+/**
+ * 
+ * @param request Incoming GET Device Request, should include Authorization Header
+ * @returns HttpResponse containing a filtered Device Bundle
+ */
 export async function Device(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
     const [authToken, userId, unauthorizedError] = getAuthTokenAndUserId(request);
@@ -87,6 +97,11 @@ export async function Device(request: HttpRequest, context: InvocationContext): 
     return { 'headers': { 'content-type': 'application/json' }, 'body': JSON.stringify(deviceBundle) };
 };
 
+/**
+ * 
+ * @param request Incoming GET Observation Request, should include Authorization Header
+ * @returns HttpResponse containing a filtered Observation Bundle
+ */
 export async function Observation(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
     const [authToken, userId, unauthorizedError] = getAuthTokenAndUserId(request);
@@ -130,18 +145,19 @@ export async function Observation(request: HttpRequest, context: InvocationConte
     if (fetchError != null) {
         return fetchError;
     }
-
+    //first two steps are the same filter steps as Device Handler function
     const filteredPatients = patients.filter(patient => isPatientInPractitionerOrganization(patient, practitionerRole));
     const filteredDevices = devices.filter(device => filteredPatients.some(patient => device.patient.reference.endsWith(patient.id))
         || ((device.owner.reference === practitionerRole.organization.reference) && isPractitionerRolePermitted(consents, practitionerRole, device)));
-
+    //filters observations if observation patient matches a patient in filtered patiens list
+    // or filters observation if observation device id matches a device in the filtered device list
     const filteredObservations = observations.filter(observation => filteredPatients.some(patient => observation.subject.reference.endsWith(patient.id))
         || (filteredDevices.some(device => observation.device.reference.endsWith(device.id))));
 
     const observationBundle = getSearchBundle(filteredObservations);
     return { 'headers': { 'content-type': 'application/json' }, 'body': JSON.stringify(observationBundle) };
 };
-
+// extracts token and user id from Authorization header
 function getAuthTokenAndUserId(request): [authToken: string | undefined, userId: string | undefined, httpError: HttpResponseInit | undefined] {
     if (!request.headers.get('Authorization')) {
         return [undefined, undefined, { status: 401 }];
@@ -150,7 +166,7 @@ function getAuthTokenAndUserId(request): [authToken: string | undefined, userId:
     const userId: string = (jwtDecode(authToken) as JwtCustomPayload).oid;
     return [authToken, userId, undefined]
 };
-
+// takes a FhirResourceArray and wraps it in a Bundle
 function getSearchBundle(ressources: FhirResource[]): Bundle {
     return {
         resourceType: "Bundle",
@@ -162,7 +178,7 @@ function getSearchBundle(ressources: FhirResource[]): Bundle {
         }))
     }
 };
-
+// takes a FhirResource Type and sends a fetch request to the fhir server
 async function getRessources<T extends FhirResource>(authToken: string, endpoint: T['resourceType']): Promise<[devices: T[] | undefined, httpError: HttpResponseInit | undefined]> {
     const ressourceResponse = await fetch(fhirURL + '/' + endpoint, {
         method: 'GET',
