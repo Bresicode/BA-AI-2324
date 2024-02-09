@@ -1,0 +1,44 @@
+{
+  "resourceType": "Consent",
+  "status": "active",
+  "patient": {
+    "reference": "Patient/{ID_MaxMustermann}"
+  },
+  "scope": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/consentscope",
+        "code": "patient-privacy",
+        "display": "Privacy Consent"
+      }
+    ]
+  },
+  "category": {
+    "coding": [
+      {
+        "system": "http://loinc.org",
+        "code": "59284-0",
+        "display": "Patient Consent"
+      }
+    ]
+  },
+  "provision": {
+    "type": "permit",
+    "actor": [
+      {
+        "role": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+              "code": "GRANTEE",
+              "display": "grantee"
+            }
+          ]
+        },
+        "reference": {
+          "reference": "PractitionerRole/{ID_PractitionerRole_MedicalDeviceCorp}"
+        }
+      }
+    ]
+  }
+}

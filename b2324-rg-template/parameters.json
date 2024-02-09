@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_b2324_aad_func_name": {
+            "value": null
+        },
+        "Redis_b2324_apim_cache_name": {
+            "value": null
+        },
+        "serverfarms_b2324_appserv_name": {
+            "value": null
+        },
+        "service_b2324_apim_name": {
+            "value": null
+        },
+        "components_b2324_appins_name": {
+            "value": null
+        },
+        "staticSites_b2324_contextswa_name": {
+            "value": null
+        },
+        "storageAccounts_b2324funcsa_name": {
+            "value": null
+        },
+        "workspaces_b2324health_name": {
+            "value": null
+        },
+        "sites_b2324_customoperations_func_name": {
+            "value": null
+        },
+        "workspaces_b2324_la_name": {
+            "value": null
+        },
+        "serverfarms_ASP_b2324_customoperations_func_35a5_name": {
+            "value": null
+        },
+        "actionGroups_Application_Insights_Smart_Detection_name": {
+            "value": null
+        },
+        "smartdetectoralertrules_failure_anomalies___b2324_appins_name": {
+            "value": null
+        },
+        "actiongroups_application_insights_smart_detection_externalid": {
+            "value": null
+        }
+    }
+}

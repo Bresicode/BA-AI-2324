@@ -1,0 +1,24 @@
+{
+    "resourceType": "Observation",
+    "code": {
+        "coding": [
+            {
+                "system": "http://loinc.org",
+                "code": "11524-6",
+                "display": "EKG study"
+            }
+        ]
+    },
+    "status": "final",
+    "performer": [
+        {
+            "reference": "PractitionerRole/{ID_PractitionerRoleGoodHospital}"
+        }
+    ],
+    "subject": {
+        "reference": "Patient/{ID_SebastianSchaefer}"
+    },
+    "device": {
+        "reference": "Device/{ID_Geraet2}"
+    }
+}

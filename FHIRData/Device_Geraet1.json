@@ -1,0 +1,9 @@
+{
+    "resourceType": "Device",
+    "patient": {
+        "reference": "Patient/{ID_MaxMustermann}"
+    },
+    "owner": {
+        "reference": "Organization/{ID_MedicalDeviceCorp}"
+    }
+}

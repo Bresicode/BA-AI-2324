@@ -1,0 +1,14 @@
+{
+    "resourceType": "Patient",
+    "name": [
+        {
+            "family": "Schäfer",
+            "given": [
+                "Sebastian"
+            ]
+        }
+    ],
+    "managingOrganization": {
+        "reference": "Organization/{ID_HealthClinic}"
+    }
+}

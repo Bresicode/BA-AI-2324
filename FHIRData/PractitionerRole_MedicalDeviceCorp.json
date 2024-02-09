@@ -1,0 +1,9 @@
+{
+  "resourceType": "PractitionerRole",
+  "practitioner": {
+    "reference": "Practitioner/{ID_GustavGerät}"
+  },
+  "organization": {
+    "reference": "Organization/{ID_MedicalDeviceCorp}"
+  }
+}
