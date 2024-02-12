@@ -2473,13 +2473,6 @@
 									"path": [
 										"smart",
 										"Patient"
-									],
-									"query": [
-										{
-											"key": "aud",
-											"value": "https://b2324-apim.azure-api.net/smart/",
-											"disabled": true
-										}
 									]
 								}
 							},
